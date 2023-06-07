@@ -1,0 +1,27 @@
+CREATE DATABASE <id>;
+USE <id>;
+CREATE TABLE <id> (<id> <tipo> [, <id> <tipo>]*);
+INSERT INTO <id> (<id> [, <id>]*) VALUES (<valor> [, <valor>]*);
+SELECT * FROM <id>;
+SELECT <id> [, <id>]* FROM <id>;
+SELECT * FROM <id> ORDER BY <id>;
+SELECT * FROM <id> WHERE <id> = <valor>;
+UPDATE <id> SET <id> = <valor> WHERE <id> = <valor>;
+DELETE FROM <id> WHERE <id> = <valor>;
+TRUNCATE TABLE <id>;
+
+V -> (<valor> [, <valor>]*)
+C -> [, <id> <tipo>]*
+Q -> (*|<id> [, <id>]*) from <id> (order by <id>|where <id> = <valor>)?;
+S -> create I | 
+    insert into <id> values \(V\); |
+    select Q |
+    update <id> set <id> = <valor> where <id> = <valor> | 
+    delete from <id> where <id> = <valor>; |
+    truncate table <id>;
+I -> database <id>; | table <id> \(<id> <tipo> C\);
+
+S
+S -> cI
+I -> dt<id> | t F | i
+F ->  (<id> <tipo> F) | ,<id> <tipo> F | e
