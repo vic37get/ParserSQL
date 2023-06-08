@@ -1,1 +1,1 @@
-UPDATE id1 SET id2 = '2C' WHERES id3 = "victorzinho";
+TRUNCATE TABLE id;

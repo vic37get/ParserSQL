@@ -72,9 +72,13 @@ def S():
         token = nextToken()
         ID()
         Set()
+    elif token.upper() == 'DELETE':
+        token = nextToken()
+        fromID()
+        where()
     elif token.upper() == 'TRUNCATE':
         token = nextToken()
-        create()
+        table()
     else:
         messageError(token, "CREATE, USE, INSERT, SELECT, UPDATE, DELETE, TRUNCATE")
 
@@ -144,13 +148,18 @@ def create():
         if token != ';':
             messageError(token,';')
     elif token.upper() == 'TABLE':
-        token = nextToken()
-        ID()
-        idParenthesesWithType()
-        if token != ';':
-            messageError(token,';')
+        table()
     else:
         messageError(token,'DATABASE ou TABLE')
+
+def table():
+    global token
+
+    token = nextToken()
+    ID()
+    idParenthesesWithType()
+    if token != ';':
+        messageError(token,';')
 
 def idParenthesesWithType():
     global token
