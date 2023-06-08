@@ -17,9 +17,13 @@
     
         <div class="conteudo">
             <div class="sidebar">
-                <div class="sidebar-icon">
-                    <i class="far fa-file"></i>
-                </div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="sidebar-icon">
+                        <input type="file" id="my-file" class="far fa-file" name='file' style="display: none;">
+                        <label for="my-file" class="file-label"><i class='far fa-file' ></i></label>
+                    </div>
+                </form>
                 <div class="sidebar-icon">
                     <i class="fas fa-search"></i>
                 </div>
@@ -32,7 +36,6 @@
             </div>
     
             <div id="editor">
-                
             </div>
             <div class="div-log">
                 <h1>teste</h1>
@@ -41,4 +44,8 @@
         </div>
         
     </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.28.0/min/vs/loader.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
 </html>

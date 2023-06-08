@@ -30,7 +30,7 @@ token = nextToken()
 def ID():
     global token
     if not re.match(re.compile(f'[a-z]([a-z0-9])*',flags=re.IGNORECASE),token):
-        raise TypeError('Token não reconhecido')
+        raise TypeError('ID inválido!')
     token = nextToken()
 
     
@@ -53,8 +53,11 @@ def S():
             messageError(token,'values')
         token = nextToken()
         V()
-    else:
-        messageError(token,'create')
+    elif token.upper() == 'use'.upper():
+        token = nextToken()
+        ID()
+        if token != ';':
+            messageError(token, ';')
 
 def I():
     global token
@@ -70,7 +73,7 @@ def I():
         if token != ';':
             messageError(token,';')
     else:
-        messageError(token,'database')
+        messageError(token,'DATABASE ou TABLE')
 
 def F():
     global token

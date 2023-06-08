@@ -1,5 +1,5 @@
-CREATE DATABASE <id>;
-USE <id>;
+CREATE DATABASE <id>; FEITO
+USE <id>; FEITO
 CREATE TABLE <id> (<id> <tipo> [, <id> <tipo>]*);
 INSERT INTO <id> (<id> [, <id>]*) VALUES (<valor> [, <valor>]*) [, (<valor> [, <valor>]*)]*;
 SELECT * FROM <id>;
