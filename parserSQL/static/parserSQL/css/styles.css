@@ -88,6 +88,7 @@ body {
     background-color: var(--cor-log);
     border-left: 1px solid var(--cor-bordas);
     padding: 20px;
+    color: white;
 }
 
 @media (max-width: 768px) {

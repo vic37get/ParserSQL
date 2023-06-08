@@ -1,4 +1,5 @@
 import re
+
 def getAllTokens():
     with open('input.txt','r') as f:
         tokens = f.read()\
@@ -12,7 +13,7 @@ def getAllTokens():
     return re.findall(r'\S+', tokens)
 
 def messageError(incoming,expected):
-    raise TypeError(f'Token "{incoming}" não reconhecido, esperado "{expected}"')
+    raise TypeError(f'Error: Token "{incoming}" não reconhecido, esperado "{expected}"')
 
 tokens = getAllTokens()
 def _nextToken():
@@ -24,13 +25,13 @@ def nextToken():
         t = next(gerador)
         return t
     except StopIteration:
-        raise TypeError('Erro: ";" esperado.')
+        raise TypeError('Error: ";" esperado.')
 token = nextToken()
 
 def ID():
     global token
     if not re.match(re.compile(f'[a-z]([a-z0-9])*',flags=re.IGNORECASE),token):
-        raise TypeError('ID inválido!')
+        messageError(token, 'ID válido')
     token = nextToken()
 
     
@@ -216,5 +217,4 @@ def valueParentheses():
         value()
         valueParentheses()
 
-if __name__ == "__main__":
-    S()
+S()
