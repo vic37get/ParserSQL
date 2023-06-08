@@ -1,1 +1,1 @@
-CREATE teste id;
+SELECT * FROM id WHERE id = "'8f'";
