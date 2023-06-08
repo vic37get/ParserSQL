@@ -5,7 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% include 'parserSQL/partials/head-imports.html' %}
-        {% include 'parserSQL/partials/visual-ide.html' %}
         <title>Parser SQL</title>
     </head>
     <body>
@@ -32,7 +31,7 @@
                 </div>
 
                 <div class="sidebar-icon">
-                    <i class="fa-regular fa-circle-play"></i>
+                    <button id="save-button"><i class="fa-regular fa-circle-play"></i></button>
                 </div>
                 
             </div>
@@ -45,8 +44,73 @@
         </div>
         
     </body>
+    <script>
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.28.0/min/vs' }});
+        require(["vs/editor/editor.main"], function () {
+            monaco.editor.defineTheme('monokai', {
+                base: 'vs-dark',
+                inherit: true,
+                rules: [
+                    { token: 'comment', foreground: '888888' },
+                    { token: 'keyword', foreground: 'f92672' },
+                    { token: 'string', foreground: 'e6db74' },
+                    { token: 'number', foreground: 'ae81ff' }
+                ],
+                colors: {}
+            });
+    
+            monaco.editor.setTheme('monokai');
+    
+            var editor = monaco.editor.create(document.getElementById('editor'), {
+                value: "",
+                language: "sql",
+                automaticLayout: true
+            });
+    
+            var saveButton = document.getElementById('save-button');
+            saveButton.addEventListener('click', function() {
+                // Obtenha o conteúdo do editor
+                var conteudo = editor.getValue();
+            
+                // Enviar o conteúdo via Ajax
+                enviarParaServidor(conteudo);
+            });
+    
+            function enviarParaServidor(conteudo) {
+                // Crie uma instância do objeto XMLHttpRequest
+                var xhttp = new XMLHttpRequest();
+                
+                // Defina a função de retorno de chamada para lidar com a resposta do servidor
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // A resposta do servidor foi recebida com sucesso
+                        console.log("Conteúdo enviado com sucesso!");
+                        console.log(this.responseText);
+                    } else if (this.readyState == 4 && this.status != 200) {
+                        // Ocorreu um erro durante a solicitação Ajax
+                        console.log("Erro ao enviar o conteúdo!");
+                    }
+                };
+                
+                // Defina a URL do servidor que receberá o conteúdo
+                var url = "{% url 'parserSQL:save_text_file' %}";
+                
+                // Defina o método e os parâmetros da solicitação
+                xhttp.open("POST", url, true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");  // Adicione esta linha para indicar uma requisição AJAX
+                xhttp.send("content=" + encodeURIComponent(conteudo));
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.28.0/min/vs/loader.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+                var url = "{% url 'parserSQL:index' %}";
+                
+                // Defina o método e os parâmetros da solicitação
+                xhttp.open("POST", url, true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");  // Adicione esta linha para indicar uma requisição AJAX
+                xhttp.send("content=" + encodeURIComponent(conteudo));
+            }
+        });
+    </script>
+    
+    
 </html>
