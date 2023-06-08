@@ -36,26 +36,26 @@ def ID():
     
 def S():
     global token
-    if token.upper() == 'create'.upper():
+    if token.upper() == 'CREATE':
         token = nextToken()
         create()
-    elif token.upper() == 'use'.upper():
+    elif token.upper() == 'USE':
         token = nextToken()
         ID()
         if token != ';':
             messageError(token, ';')
-    elif token.upper() == 'insert'.upper():
+    elif token.upper() == 'INSERT':
         token = nextToken()
-        if token.upper() != 'into'.upper():
-            messageError(token,'into')
+        if token.upper() != 'INTO':
+            messageError(token,'INTO')
         token = nextToken()
         ID()
         idParenthesesNoType()
-        if token.upper() != 'values'.upper():
-            messageError(token,'values')
+        if token.upper() != 'VALUES':
+            messageError(token,'VALUES')
         token = nextToken()
         valueParentheses()
-    elif token.upper() == 'select'.upper():
+    elif token.upper() == 'SELECT':
         token = nextToken()
         if token == '*':
             token = nextToken()
@@ -68,21 +68,44 @@ def S():
         orderBy()
         if token != ';':
             messageError(token, ';')
-    elif token.upper() == 'truncate'.upper():
+    elif token.upper() == 'UPDATE':
+        token = nextToken()
+        ID()
+        Set()
+    elif token.upper() == 'TRUNCATE':
         token = nextToken()
         create()
+    else:
+        messageError(token, "CREATE, USE, INSERT, SELECT, UPDATE, DELETE, TRUNCATE")
+
+
+def Set():
+    global token
+
+    if token.upper() != 'SET':
+        messageError(token, 'SET')
+    token = nextToken()
+    compare()
+    where()
+
+def compare():
+    global token
+
+    ID()
+    if token != "=":
+        messageError(token, "=")
+    token = nextToken()
+    value()
+
 
 def where():
     global token
 
     if token.upper() == 'WHERE':
         token = nextToken()
-        ID()
-        
-        if token != "=":
-            messageError(token, "=")
-        token = nextToken()
-        value()
+        compare()
+    else:
+        messageError(token, 'WHERE')
 
 def value():
     global token
@@ -115,12 +138,12 @@ def fromID():
 
 def create():
     global token
-    if token.upper() == 'database'.upper():
+    if token.upper() == 'DATABASE':
         token = nextToken()
         ID()
         if token != ';':
             messageError(token,';')
-    elif token.upper() == 'table'.upper():
+    elif token.upper() == 'TABLE':
         token = nextToken()
         ID()
         idParenthesesWithType()
@@ -140,7 +163,7 @@ def idParenthesesWithType():
             messageError(token,')')
         else:
             token = nextToken()
-    if token.upper() == ',':
+    if token == ',':
         token = nextToken()
         ID()
         ID()
@@ -163,7 +186,7 @@ def idParenthesesNoType():
 
 def idNoParentheses():
     global token
-    if token.upper() == ',':
+    if token == ',':
         token = nextToken()
         ID()
         idNoParentheses()
@@ -171,15 +194,15 @@ def idNoParentheses():
 
 def valueParentheses():
     global token
-    if token.upper() == '(':
+    if token == '(':
         token = nextToken()
         value()
         valueParentheses()
-        if token.upper() != ')':
+        if token != ')':
             messageError(token,')')
         else:
             token = nextToken()
-    if token.upper() == ',':
+    if token == ',':
         token = nextToken()
         value()
         valueParentheses()

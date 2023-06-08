@@ -1,1 +1,1 @@
-SELECT * FROM id WHERE id = "'8f'";
+UPDATE id1 SET id2 = '2C' WHERES id3 = "victorzinho";

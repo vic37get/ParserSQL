@@ -1,11 +1,11 @@
 CREATE DATABASE <id>;  FEITO
 USE <id>;              FEITO
 CREATE TABLE <id> (<id> <tipo> [, <id> <tipo>]*); FEITO
-INSERT INTO <id> (<id> [, <id>]*) VALUES (<valor> [, <valor>]*) [, (<valor> [, <valor>]*)]*;
+INSERT INTO <id> (<id> [, <id>]*) VALUES (<valor> [, <valor>]*) [, (<valor> [, <valor>]*)]*; FEITO
 SELECT * FROM <id>; FEITO     
 SELECT <id> [, <id>]* FROM <id>;    FEITO
 SELECT * FROM <id> ORDER BY <id>;   FEITO
 SELECT * FROM <id> WHERE <id> = <valor>;    FEITO
-UPDATE <id> SET <id> = <valor> WHERE <id> = <valor>;
+UPDATE <id> SET <id> = <valor> WHERE <id> = <valor>;    FEITO
 DELETE FROM <id> WHERE <id> = <valor>;
 TRUNCATE TABLE <id>;
