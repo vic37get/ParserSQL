@@ -33,3 +33,14 @@ def realizaParser():
     except subprocess.CalledProcessError as e:
         pass
     return dados
+
+def splitMantendoSeparador(string, separador):
+    string_split = []
+    string_aux = ''
+    for caractere in string:
+        string_aux += caractere
+        if caractere == separador:
+            string_split.append(string_aux)
+            string_aux = ''
+    string_split.append(string_aux)
+    return string_split
