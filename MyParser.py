@@ -49,6 +49,7 @@ def equality(expected):
 
 def S():
     global token
+    token: str = token.lower()
     if token == "create":
         token = nextToken()
         if token == "table":
@@ -106,8 +107,10 @@ def INSERT():
     P()
     equality(")")
     equality("values")
+    equality("(")
     VALOR()
     VALOR_VARIOS()
+    equality(")")
 
 
 def SELECT():
