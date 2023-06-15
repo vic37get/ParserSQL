@@ -1,1 +1,3 @@
-create table ID
+create table ID (nome string,idade int);
+select * from id;
+select nome,idade from cliente;
