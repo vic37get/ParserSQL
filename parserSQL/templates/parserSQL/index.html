@@ -38,8 +38,8 @@
     
             <div id="editor">
             </div>
-            <div class="div-log">
-                {{saidaLog}}
+            <div class="div-log" id="div-log-princ">
+                
             </div>
         </div>
         
@@ -85,7 +85,8 @@
                     if (this.readyState == 4 && this.status == 200) {
                         // A resposta do servidor foi recebida com sucesso
                         console.log("Conteúdo enviado com sucesso!");
-                        console.log(this.responseText);
+                        console.log("resposta: "+this.response );
+                        document.getElementById("div-log-princ").innerHTML = this.response
                     } else if (this.readyState == 4 && this.status != 200) {
                         // Ocorreu um erro durante a solicitação Ajax
                         console.log("Erro ao enviar o conteúdo!");
@@ -101,13 +102,6 @@
                 xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");  // Adicione esta linha para indicar uma requisição AJAX
                 xhttp.send("content=" + encodeURIComponent(conteudo));
 
-                var url = "{% url 'parserSQL:index' %}";
-                
-                // Defina o método e os parâmetros da solicitação
-                xhttp.open("POST", url, true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");  // Adicione esta linha para indicar uma requisição AJAX
-                xhttp.send("content=" + encodeURIComponent(conteudo));
             }
         });
     </script>

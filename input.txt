@@ -1,1 +1,1 @@
-CREATE TABLES
+create table oi;
