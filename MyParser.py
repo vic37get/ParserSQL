@@ -49,7 +49,7 @@ def equality(expected):
 
 def S():
     global token
-    token: str = token.lower()
+    token = token.lower()
     if token == "create":
         token = nextToken()
         if token == "table":
