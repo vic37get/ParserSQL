@@ -1,2 +1,1 @@
-create table id (id tipo);
-create table id (id);
+CREATE DATABASE id

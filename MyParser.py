@@ -11,9 +11,10 @@ def getAllTokens():
             .replace("\n", " \n ")
             .replace(">,", "> ,")
             .replace(",<", ", <")
-        )
+        ).lower()
         tokens = tokens + "$"
         tokens = re.sub(re.compile(f","), " , ", tokens)
+        print(tokens)
     return re.findall(r"\S+", tokens)
 
 
@@ -49,7 +50,7 @@ def equality(expected):
 
 def S():
     global token
-    token = token.lower()
+
     if token == "create":
         token = nextToken()
         if token == "table":
@@ -65,16 +66,16 @@ def S():
             token = nextToken()
             ID()
         else:
-            messageError(token, "(table|database)")
-    if token == "insert":
+            messageError(token, "TABLE ou DATABASE")
+    elif token == "insert":
         token = nextToken()
         INSERT()
-    if token == "select":
+    elif token == "select":
         token = nextToken()
         SELECT()
         WHERE()
         ORDER()
-    if token == "update":
+    elif token == "update":
         token = nextToken()
         ID()
         equality("set")
@@ -82,16 +83,17 @@ def S():
         equality("=")
         VALOR()
         FROM()
-    if token == "delete":
+    elif token == "delete":
         token = nextToken()
         FROM()
         WHERE()
-    if token == "truncate":
+    elif token == "truncate":
         token = nextToken()
         equality("table")
         ID()
-    if token == "use":
+    elif token == "use":
         ID()
+    else: messageError(token, 'CREATE, USE, INSERT, SELECT, UPDATE, DELETE ou TRUNCATE')
     equality(";")
 
 

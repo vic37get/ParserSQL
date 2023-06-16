@@ -30,7 +30,7 @@ def realizaParser():
             ["python", "MyParser.py"], capture_output=True, text=True
         )
         if saida.returncode != 0:
-            dados = saida.stderr.split("TypeError:")[1]
+            dados = saida.stderr.split("TypeError:")
         else:
             dados = "Exit success 0"
     except subprocess.CalledProcessError as e:
