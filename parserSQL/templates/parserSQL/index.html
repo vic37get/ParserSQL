@@ -16,16 +16,14 @@
     
         <div class="conteudo">
             <div class="sidebar">
-                <form method="POST" enctype="multipart/form-data">
+                <form id="formInp" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="sidebar-icon">
                         <input type="file" id="my-file" class="far fa-file" name='file' style="display: none;">
                         <label for="my-file" class="file-label"><i class='far fa-file' ></i></label>
+                        <button type="submit">Enviar</button>
                     </div>
                 </form>
-                <div class="sidebar-icon">
-                    <i class="far fa-save"></i>
-                </div>
 
                 <div class="sidebar-icon">
                     <button id="save-button" style="background: none; padding: none; border: none; margin: none;"><i class="fa-regular fa-circle-play"></i></button>
@@ -41,6 +39,32 @@
         </div>
         
     </body>
+    <script>
+        $(document).ready(function() {
+            $('#formInp').submit(function(e) {
+                e.preventDefault(); // Impede o envio padrão do formulário
+    
+                var meuCampoValor = $('#my-file').val();
+    
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'parserSQL:minha_view' %}",
+                    data: {
+                        'file': meuCampoValor,
+                        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function() {
+                        // Lógica a ser executada após o envio bem-sucedido
+                        console.log('Formulário enviado com sucesso!');
+                    },
+                    error: function() {
+                        // Lógica a ser executada em caso de erro
+                        console.log('Erro ao enviar o formulário.');
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.28.0/min/vs' }});
         require(["vs/editor/editor.main"], function () {
@@ -59,7 +83,7 @@
             monaco.editor.setTheme('monokai');
     
             var editor = monaco.editor.create(document.getElementById('editor'), {
-                value: "",
+                value: "{{conteudo}}",
                 language: "sql",
                 automaticLayout: true
             });

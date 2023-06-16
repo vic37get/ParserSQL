@@ -1,5 +1,7 @@
 import re
 
+linhas = 1
+
 
 def getAllTokens():
     with open("input.txt", "r") as f:
@@ -14,12 +16,12 @@ def getAllTokens():
         ).lower()
         tokens = tokens + "$"
         tokens = re.sub(re.compile(f","), " , ", tokens)
-        print(tokens)
     return re.findall(r"\S+", tokens)
 
 
 def messageError(incoming, expected):
-    raise TypeError(f'Error: Token "{incoming}" não reconhecido, esperado "{expected}"')
+    raise TypeError(
+        f'Error: Token "{incoming}" não reconhecido, esperado "{expected}" no comando:{linhas}')
 
 
 tokens = getAllTokens()
@@ -49,8 +51,7 @@ def equality(expected):
 
 
 def S():
-    global token
-
+    global token, linhas
     if token == "create":
         token = nextToken()
         if token == "table":
@@ -82,7 +83,7 @@ def S():
         ID()
         equality("=")
         VALOR()
-        FROM()
+        WHERE()
     elif token == "delete":
         token = nextToken()
         FROM()
@@ -92,9 +93,13 @@ def S():
         equality("table")
         ID()
     elif token == "use":
+        token = nextToken()
         ID()
-    else: messageError(token, 'CREATE, USE, INSERT, SELECT, UPDATE, DELETE ou TRUNCATE')
+    else:
+        messageError(
+            token, 'CREATE, USE, INSERT, SELECT, UPDATE, DELETE ou TRUNCATE')
     equality(";")
+    linhas += 1
 
 
 def TIPO():
@@ -181,6 +186,7 @@ def PT():
         token = nextToken()
         ID()
         TIPO()
+        PT()
 
 
 def P():

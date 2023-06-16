@@ -6,11 +6,24 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def index(request):
+    context = {}
     dados = ""
     dados = realizaParser()
-    context = {"saidaLog": dados}
+    context["saidaLog"] = dados
     template = loader.get_template("parserSQL/index.html")
     return HttpResponse(template.render(context, request))
+
+
+@csrf_exempt
+def minha_view(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.POST['file']
+        print('ff\n\n', uploaded_file)
+        file = uploaded_file.read().decode('utf-8')
+        with open("input.txt", "w") as f:
+            f.write(file)
+        context['conteudo'] = file
 
 
 @csrf_exempt
@@ -27,24 +40,13 @@ def save_text_file(request):
 def realizaParser():
     try:
         saida = subprocess.run(
-            ["python", "MyParser.py"], capture_output=True, text=True
+            ["python3", "MyParser.py"], capture_output=True, text=True
         )
+        print(saida)
         if saida.returncode != 0:
-            dados = saida.stderr.split("TypeError:")
+            dados = saida.stderr.split("TypeError:")[1]
         else:
-            dados = "Exit success 0"
+            dados = "Compilado"
     except subprocess.CalledProcessError as e:
         pass
     return dados
-
-
-def splitMantendoSeparador(string, separador):
-    string_split = []
-    string_aux = ""
-    for caractere in string:
-        string_aux += caractere
-        if caractere == separador:
-            string_split.append(string_aux)
-            string_aux = ""
-    string_split.append(string_aux)
-    return string_split
