@@ -22,8 +22,8 @@ def getAllTokens():
 def messageError(incoming, expected):
     if incoming == "$":
         raise TypeError(
-        f'Error: Erro de token, esperado "{expected}" no comando:{linhas}')
-    else:    
+            f'Error: Erro de token, esperado "{expected}" no comando:{linhas}')
+    else:
         raise TypeError(
             f'Error: Token "{incoming}" não reconhecido, esperado "{expected}" no comando:{linhas}')
 
@@ -87,10 +87,14 @@ def S():
         ID()
         equality("=")
         VALOR()
+        if token != 'where':
+            messageError(token, 'where')
         WHERE()
     elif token == "delete":
         token = nextToken()
         FROM()
+        if token != 'where':
+            messageError(token, 'where')
         WHERE()
     elif token == "truncate":
         token = nextToken()

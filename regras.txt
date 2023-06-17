@@ -9,3 +9,24 @@ SELECT * FROM <id> WHERE <id> = <valor>;    FEITO
 UPDATE <id> SET <id> = <valor> WHERE <id> = <valor>;    FEITO
 DELETE FROM <id> WHERE <id> = <valor>;
 TRUNCATE TABLE <id>;
+
+
+S -> create (table ID \( ID TIPO PT \) | database ID) ;
+    | insert INSERT ;
+    | select SELECT WHERE ORDER ;
+    | update ID set ID VALOR WHERE ;
+    | delete FROM WHERE ;
+    | truncate table ID ;
+    | use ID ;
+TIPO -> ID
+INSERT -> into ID \( ID P \) values  \( VALOR VALOR_VARIOS \)
+SELECT -> (*|ID P) FROM
+WHERE -> (where ID = VALOR)?
+ORDER -> (order by ID)?
+FROM -> from ID
+ID -> [a-z]([a-z0-9])*
+VALOR -> ([a-z]([a-z0-9])*|[0-9]*)
+VALOR_VARIOS -> , VALOR VALOR_VARIOS
+PT -> , ID TIPO PT
+P -> , ID P
+MAIN -> S*
