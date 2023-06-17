@@ -162,7 +162,7 @@ def FROM():
 
 def ID():
     global token
-    if not re.match(re.compile(f"[a-z]([a-z0-9])*", flags=re.IGNORECASE), token):
+    if not re.match(re.compile(f"^[a-z]([a-z0-9])*$", flags=re.IGNORECASE), token):
         messageError(token, "ID válido")
     token = nextToken()
 
@@ -170,7 +170,7 @@ def ID():
 def VALOR():
     global token
     if not re.match(
-        re.compile(f"([a-z]([a-z0-9])*|[0-9]*)", flags=re.IGNORECASE), token
+        re.compile(f"^([a-z]([a-z0-9])*|[0-9]*)$", flags=re.IGNORECASE), token
     ):
         messageError(token, "Valor válido")
     token = nextToken()
