@@ -14,14 +14,18 @@ def getAllTokens():
             .replace(">,", "> ,")
             .replace(",<", ", <")
         ).lower()
-        tokens = tokens + "$"
+        tokens = tokens + " $"
         tokens = re.sub(re.compile(f","), " , ", tokens)
     return re.findall(r"\S+", tokens)
 
 
 def messageError(incoming, expected):
-    raise TypeError(
-        f'Error: Token "{incoming}" não reconhecido, esperado "{expected}" no comando:{linhas}')
+    if incoming == "$":
+        raise TypeError(
+        f'Error: Erro de token, esperado "{expected}" no comando:{linhas}')
+    else:    
+        raise TypeError(
+            f'Error: Token "{incoming}" não reconhecido, esperado "{expected}" no comando:{linhas}')
 
 
 tokens = getAllTokens()

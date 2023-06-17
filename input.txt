@@ -1,5 +1,1 @@
-A inflação anual no Brasil atingiu 4,65% em março.
-
-Na Argentina foi de 7,7% - não em 12 meses, mas apenas no mês de março. A inflação anual está em 104%, enquanto o “dólar paralelo” foi de 390 para 500 pesos em 2 semanas.
-
-Aos nossos vizinhos, só resta esperar por um milagre…
+create database jasson;

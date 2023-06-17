@@ -16,15 +16,15 @@ def index(request):
 
 @csrf_exempt
 def minha_view(request):
-    context = {}
-    if request.method == 'POST':
-        uploaded_file = request.POST['file']
-        print('ff\n\n', uploaded_file)
-        file = uploaded_file.read().decode('utf-8')
-        with open("input.txt", "w") as f:
-            f.write(file)
-        context['conteudo'] = file
-
+    # context = {}
+    # if request.method == 'POST':
+    #     uploaded_file = request.POST['file']
+    #     print('ff\n\n', uploaded_file)
+    #     file = uploaded_file.read().decode('utf-8')
+    #     with open("input.txt", "w") as f:
+    #         f.write(file)
+    #     context['conteudo'] = file
+    return 0
 
 @csrf_exempt
 def save_text_file(request):
@@ -46,7 +46,7 @@ def realizaParser():
         if saida.returncode != 0:
             dados = saida.stderr.split("TypeError:")[1]
         else:
-            dados = "Compilado"
+            dados = "Process finished with exit code 0"
     except subprocess.CalledProcessError as e:
         pass
     return dados

@@ -16,14 +16,6 @@
     
         <div class="conteudo">
             <div class="sidebar">
-                <form id="formInp" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="sidebar-icon">
-                        <input type="file" id="my-file" class="far fa-file" name='file' style="display: none;">
-                        <label for="my-file" class="file-label"><i class='far fa-file' ></i></label>
-                        <button type="submit">Enviar</button>
-                    </div>
-                </form>
 
                 <div class="sidebar-icon">
                     <button id="save-button" style="background: none; padding: none; border: none; margin: none;"><i class="fa-regular fa-circle-play"></i></button>
@@ -87,6 +79,20 @@
                 language: "sql",
                 automaticLayout: true
             });
+
+            // var decorations = editor.deltaDecorations(
+            //     [],
+            //     [
+            //         {
+            //             range: new monaco.Range(1, 6, 1, 7),
+            //             options: { inlineClassName: 'myInlineDecoration' }
+            //         },
+            //         {
+            //             range: new monaco.Range(2, 3, 2, 4),
+            //             options: { inlineClassName: 'myInlineDecoration' }
+            //         }
+            //     ]
+            // );
     
             var saveButton = document.getElementById('save-button');
             saveButton.addEventListener('click', function() {
@@ -107,7 +113,11 @@
                         // A resposta do servidor foi recebida com sucesso
                         console.log("Conteúdo enviado com sucesso!");
                         console.log("resposta: "+this.response );
-                        document.getElementById("div-log-princ").innerHTML = this.response
+                        var newCode = this.response
+                        if (this.response.includes("Error")){
+                            newCode = "<p style='Color: #f5535a ;'>" + this.response+"</p>"
+                        }
+                        document.getElementById("div-log-princ").innerHTML = newCode
                     } else if (this.readyState == 4 && this.status != 200) {
                         // Ocorreu um erro durante a solicitação Ajax
                         console.log("Erro ao enviar o conteúdo!");
